@@ -21,8 +21,10 @@ export async function open(name: string, opts?: any) {
         dbCon = imp.default
         openFunc = require("./better-sqlite3-driver").default
         return await openFunc(dbCon, name, opts)
-    } catch {
+    } catch (e) {
+        console.log(e)
     }
+
     
    throw Error("no supported driver is available, install react-native-quick-sqlite or better-sqlite3")
 }

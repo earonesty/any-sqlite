@@ -1,20 +1,21 @@
-
 {
-  "compilerOptions": {
-    "module": "esnext",
-    "esModuleInterop": true,
-    "target": "esnext",
-    "lib": ["esnext", "dom"],
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "rootDir": "src",
-    "outDir": "lib",
-    "declaration": true,
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*"]
+    "include": ["src", "types", "decs.d.ts"],
+    "compilerOptions": {
+        "allowJs": true,
+        "declaration": true,
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "types": ["jest", "node"],
+        "lib": ["esnext", "dom"],
+        "target": "esnext",
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "strictPropertyInitialization": false,
+        "useDefineForClassFields": false,
+        "baseUrl": ".",
+        "outDir": "lib",
+        "rootDir": "src"
     }
-  },
-  "include": ["src/**/*"]
 }

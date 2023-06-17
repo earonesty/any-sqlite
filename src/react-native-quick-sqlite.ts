@@ -12,7 +12,7 @@ class Db implements Database {
         this.db = db({name})
     }
 
-    async execute(sql: string, args?: primitive[]): Promise<object[]> {
+    async execute(sql: string, args?: primitive[]): Promise<any[]> {
         const qr = await this.db.executeAsync(sql, args)
         if (qr.rows?.length) {
             return qr.rows._array
@@ -20,7 +20,7 @@ class Db implements Database {
         return []
     }
     
-    async get(sql: string, args?: primitive[]): Promise<object|undefined> {
+    async get(sql: string, args?: primitive[]): Promise<any|undefined> {
         const qr = await this.db.executeAsync(sql, args)
         if (qr.rows?.length) {
             return qr.rows.item(0)
