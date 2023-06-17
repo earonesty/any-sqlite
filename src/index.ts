@@ -11,7 +11,7 @@ export async function open(name: string, opts?: any) {
     try {
         const { open }  = await import("react-native-quick-sqlite")
         dbCon = open
-        openFunc = require("./react-native-quick-driver").default
+        openFunc = require("./react-native-quick-sqlite").default
         return await openFunc(dbCon, name, opts)
     } catch {
     }
