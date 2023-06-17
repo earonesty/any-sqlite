@@ -23,5 +23,5 @@ export async function open(name: string, opts?: any) {
     } catch {
     }
     
-   throw Error("no supported driver is available")
+   throw Error("no supported driver is available, install react-native-quick-sqlite or better-sqlite3")
 }
