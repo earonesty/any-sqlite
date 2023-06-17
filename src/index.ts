@@ -1,4 +1,5 @@
 import { Database } from './types'
+export { Database } from './types'
 
 let openFunc: (dbCon: object, name: string, opts: any) => Promise<Database>
 let dbCon: object
