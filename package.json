@@ -5,6 +5,9 @@
   "types": "lib/index.d.ts",
   "author": "Erik Aronesty <erik@q32.com>",
   "description": "react-native + node sqlite.  todo: browser",
+  "engines": {
+    "node": ">=12"
+  },
   "keywords": [
     "sqlite"
   ],
