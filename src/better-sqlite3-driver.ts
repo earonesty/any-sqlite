@@ -1,6 +1,6 @@
 import type { Database as BetterDb, Statement } from 'better-sqlite3';
 import { Database, primitive } from './types';
-import * as fs from 'fs/promises'
+import * as fs from 'fs'
 
 interface BetterDbConstructor {
     new (name: string, opts: any): BetterDb;

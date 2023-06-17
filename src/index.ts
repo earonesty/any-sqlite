@@ -9,7 +9,7 @@ export async function open(name: string, opts?: any) {
         return await openFunc(dbCon, name, opts)
 
     try {
-        const { open }  = await import("react-native-quick-sqlit" + "e")
+        const { open }  = await import("react-native-quick-sqlite")
         dbCon = open
         openFunc = (await import("./react-native-quick-sqlite")).default
         return await openFunc(dbCon, name, opts)
@@ -17,7 +17,7 @@ export async function open(name: string, opts?: any) {
     }
 
     try {
-        const imp = await import("better-sqlite" + "3")
+        const imp = await import("better-sqlite3")
         dbCon = imp.default
         openFunc = (await import("./better-sqlite3-driver")).default
         return await openFunc(dbCon, name, opts)
