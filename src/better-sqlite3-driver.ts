@@ -49,7 +49,7 @@ class Db implements Database {
     delete(): void {
         this.db.name
         this.close()
-        fs.unlink(this.db.name)
+        fs.unlink(this.db.name, ()=>{})
     }
 
     close(): void {
