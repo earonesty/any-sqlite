@@ -2,14 +2,10 @@ import type { QuickSQLiteConnection } from 'react-native-quick-sqlite';
 import { open as OpenFunc } from 'react-native-quick-sqlite';
 import { Database, primitive } from './types';
 
-interface DbConstructor {
-    new (name: string, opts: any): QuickSQLiteConnection;
-}
-
 class Db implements Database {
     db: QuickSQLiteConnection;
-    constructor(db: typeof OpenFunc, name: string, opts: any) {
-        this.db = db({name})
+    constructor(name: string, opts: any) {
+        this.db = OpenFunc({name})
     }
 
     async execute(sql: string, args?: primitive[]): Promise<any[]> {
@@ -42,6 +38,6 @@ class Db implements Database {
     }
 }
 
-export default function open(DBMaker: typeof OpenFunc, name: string, opts: any) {
-    return new Db(DBMaker, name, opts)
+export function open(name: string, opts: any) {
+    return new Db(name, opts)
 }
