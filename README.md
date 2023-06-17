@@ -2,7 +2,7 @@
 react native or node sqlite with a common interface
 
 ```ts
-import { open } from "../src";
+import { open } from "any-sqlite";
 
 async main() {
   const db = await open("yo.db")
