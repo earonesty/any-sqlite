@@ -10,7 +10,7 @@ beforeEach(async () => {
   } catch {
     // ok
   }
-  db = await open("yo.db")
+  db = open("yo.db")
 });
 
 afterEach(async () => {
