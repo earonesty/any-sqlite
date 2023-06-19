@@ -21,9 +21,12 @@
     "prepublish": "yarn run build",
     "test": "jest test",
     "format": "prettier -w src/ test/",
-    "postinstall": "node -e \"const fs = require('fs'); fs.copyFileSync('lib/react-native-quick-sqlite.js', 'lib/react-native.js');\""
+    "postinstall": "node driver.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "parent-module": "^3.0.0",
+    "read-pkg-up": "^9.1.0"
+  },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.4",
     "@types/jest": "^29.5.1",
