@@ -1,4 +1,4 @@
-export type primitive = string | number | boolean | null
+export type primitive = string | number | null
 
 export interface Database {
     execute(sql: string, args?: primitive[]): Promise<any[]>;
