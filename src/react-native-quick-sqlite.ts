@@ -1,47 +1,44 @@
-import type { QuickSQLiteConnection } from 'react-native-quick-sqlite';
-import { open as OpenFunc } from 'react-native-quick-sqlite';
-import { Database, primitive } from './types';
-
-interface DbConstructor {
-    new (name: string, opts: any): QuickSQLiteConnection;
-}
+import type { QuickSQLiteConnection } from "react-native-quick-sqlite";
+import { open as OpenFunc } from "react-native-quick-sqlite";
+import { Database, primitive } from "./types";
+export { Database } from "./types";
 
 class Db implements Database {
-    db: QuickSQLiteConnection;
-    constructor(db: typeof OpenFunc, name: string, opts: any) {
-        this.db = db({name})
-    }
+  db: QuickSQLiteConnection;
+  constructor(name: string, opts: any) {
+    this.db = OpenFunc({ name });
+  }
 
-    async execute(sql: string, args?: primitive[]): Promise<any[]> {
-        const qr = await this.db.executeAsync(sql, args)
-        if (qr.rows?.length) {
-            return qr.rows._array
-        }
-        return []
+  async execute(sql: string, args?: primitive[]): Promise<any[]> {
+    const qr = await this.db.executeAsync(sql, args);
+    if (qr.rows?.length) {
+      return qr.rows._array;
     }
-    
-    async get(sql: string, args?: primitive[]): Promise<any|undefined> {
-        const qr = await this.db.executeAsync(sql, args)
-        if (qr.rows?.length) {
-            return qr.rows.item(0)
-        }
-        return undefined
-    }
+    return [];
+  }
 
-    async batch(cmds:  Array<[sql: string, args: primitive[]]>): Promise<void> {
-        await this.db.executeBatchAsync(cmds)
+  async get(sql: string, args?: primitive[]): Promise<any | undefined> {
+    const qr = await this.db.executeAsync(sql, args);
+    if (qr.rows?.length) {
+      return qr.rows.item(0);
     }
+    return undefined;
+  }
 
-    delete(): void {
-        this.close()
-        this.db.delete()
-    }
+  async batch(cmds: Array<[sql: string, args: primitive[]]>): Promise<void> {
+    await this.db.executeBatchAsync(cmds);
+  }
 
-    close(): void {
-        this.db.close()
-    }
+  delete(): void {
+    this.close();
+    this.db.delete();
+  }
+
+  close(): void {
+    this.db.close();
+  }
 }
 
-export default function open(DBMaker: typeof OpenFunc, name: string, opts: any) {
-    return new Db(DBMaker, name, opts)
+export function open(name: string, opts?: any) {
+  return new Db(name, opts);
 }

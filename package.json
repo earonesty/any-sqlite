@@ -18,16 +18,19 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "prepublish": "yarn run build",
     "test": "jest test",
-    "format": "prettier -w src/ test/"
+    "format": "prettier -w src/ test/",
+    "test:package": "npm run build && node scripts/verify-package.cjs",
+    "prepack": "npm run build"
   },
   "dependencies": {},
   "devDependencies": {
+    "@expo/websql": "1.0.1",
     "@types/better-sqlite3": "^7.6.4",
     "@types/jest": "^29.5.1",
     "@types/node": "^14.14.22",
     "better-sqlite3": "^8.4.0",
+    "expo-sqlite": "~11.1.1",
     "jest": "^29.5.0",
     "prettier": "^2.8.8",
     "react-native-quick-sqlite": "^8.0.2",
