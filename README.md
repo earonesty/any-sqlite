@@ -48,10 +48,19 @@ Select an Expo SDK/native build compatible with that version. Newer Expo SDKs
 need a separate adapter; this package does not claim compatibility with them.
 
 `execute()` returns rows (an empty array for writes and empty queries); `get()`
-returns the first row or `undefined`. Expo operations resolve only after the
-transaction commits, and reject on transaction failure. `batch()` queues all
-statements in one transaction, aborting on a failed statement. Bind parameters
+returns the first row or `undefined`. Expo operations use the public `exec` API
+with checked BEGIN, COMMIT and ROLLBACK results, resolving only after commit.
+`batch()` runs statements sequentially in one transaction, aborting on a failed
+statement. Operations on a connection are serialized. Bind parameters
 are strings, numbers, or null; convert booleans to 0/1 explicitly.
 
 Always `await db.close()` and `await db.delete()` so asynchronous drivers finish
 and errors propagate. Expo deletion closes the connection before deleting.
+Close and delete stop accepting operations immediately and wait for accepted
+transactions to finish. Repeated cleanup calls share their completion promise.
+Only one live Expo adapter per database name is allowed; duplicate opens throw.
+The name can be reopened after successful close or deletion. Do not use another
+Expo connection to the same name while the adapter owns it, or issue transaction
+control statements through `execute()`/`batch()`; the adapter owns transaction
+boundaries. A failed BEGIN or rollback disables further queries. Failed cleanup
+keeps the name reserved because the native connection or file state is uncertain.
