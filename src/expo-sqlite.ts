@@ -12,14 +12,17 @@ class Db implements Database {
   private closePromise?: Promise<void>;
   private deletePromise?: Promise<void>;
 
+  /** Wrap the native connection and retain ownership of its database name. */
   constructor(private db: WebSQLDatabase, private name: string) {}
 
+  /** Run work after the prior operation, allowing the queue to drain after errors. */
   private enqueue<T>(operation: () => Promise<T>): Promise<T> {
     const result = this.tail.then(operation);
     this.tail = result.catch(() => {});
     return result;
   }
 
+  /** Execute one native statement and reject backend or statement errors. */
   private exec(sql: string, args: primitive[] = []): Promise<any[]> {
     return new Promise((resolve, reject) => {
       this.db.exec([{ sql, args }], false, (error, results) => {
@@ -69,14 +72,17 @@ class Db implements Database {
     });
   }
 
+  /** Execute a bound statement in a transaction and return its rows after commit. */
   execute(sql: string, args: primitive[] = []): Promise<any[]> {
     return this.transaction([[sql, args]]);
   }
 
+  /** Return the first committed query row, or undefined when there are no rows. */
   async get(sql: string, args?: primitive[]): Promise<any | undefined> {
     return (await this.execute(sql, args))[0];
   }
 
+  /** Execute all bound statements atomically, rolling back on failure. */
   async batch(cmds: Array<[sql: string, args: primitive[]]>): Promise<void> {
     await this.transaction(cmds);
   }
